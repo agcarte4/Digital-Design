@@ -1,0 +1,145 @@
+module adler32 (
+    input clock, rst_n, size_valid,
+    input [31:0] size,
+    input data_start,
+    input [7:0] data,
+    output checksum_valid,
+    output [31:0] checksum
+);
+
+wire load_size, load_data, counter;
+
+datapath dp (clock, rst_n, size_valid, data_start, counter,
+            load_size, load_data, checksum_valid);
+
+controller ct (clock, rst_n, size, data, load_size, load_data, 
+            counter, checksum);
+
+endmodule
+
+
+module datapath(
+    input clock, rst_n,
+    input [31:0] size,
+    input [7:0] data,
+    input load_size, load_data,
+    output reg counter,
+    output reg [31:0] checksum
+);
+
+    reg [15:0] Anew, Aold;
+    reg [15:0] Bnew, Bold;
+    reg [31:0] Snew, Sold;
+
+
+    always @(posedge clock)
+        if(!rst_n)
+            Anew <= 1;
+            Bnew <= 0;
+            Aold <= 1;
+            Bold <= 0;
+        else 
+            if(load_size)           //this if/else controls the counter given 
+                Snew = size;        //by size
+                Sold <= 0;
+            else
+                Snew = Snew - 1;    //decrement the size count
+                if(Snew == 0)       //check if the value is equal to 0
+                    counter <= 1;   //if true, set counter to done
+                else
+                    counter <= 0;   //else continue decrementing
+                Sold <= Snew;       //set the Sold to Snew
+
+            if(load_data)           //these statements control the datapath for 'A'
+                Anew = Aold + data;
+            else 
+                Anew = Aold;
+            if(Anew > 65521)        //check if sum is greater than 65521
+                Anew = Anew - 65521;
+            Aold <= Anew;           //set Aold to Anew
+
+            Bnew = Anew + Bold;     //these statements control the datapath for 'B'
+            if (Bnew > 65521)       //check if Bnew is greater than 65521
+                Bnew = Bnew - 65521;    
+            Bold <= Bnew;           //set Bold to Bnew
+
+    assign checksum = { Bnew, Anew };   //assign the values to the checksum
+
+endmodule
+
+
+module controller(
+    input clock, rst_n, 
+    input size_valid, data_start,
+    input counter,
+    output load_size, load_data,
+    output checksum_valid
+);
+  reg [2:0] cstate, nstate;
+  localparam ST_WAIT;
+  localparam ST_LOAD;
+  localparam ST_COMPUTE;
+
+  always @( posedge clock )
+    if( !rst_n )
+      cstate <= ST_WAIT;
+    else
+      cstate <= nstate;
+
+  always @*
+    case( cstate )
+      ST_WAIT : begin
+        nstate = size_valid ? ST_LOAD : ST_WAIT;
+        load_size = size_valid ? 1 : 0;
+        load_data = 0;
+        checksum_valid = 0;
+      end
+
+      ST_LOAD : begin
+        nstate = data_start ? ST_COMPUTE : ST_LOAD;
+        load_data = data_start ? 1 : 0;
+        size_valid = 0;
+        checksum_valid = 0;
+      end
+
+      ST_COMPUTE : begin
+        nstate = counter ? ST_WAIT : ST_COMPUTE;
+        load_data = counter ? 0 : 1;            //continue adding new data
+        checksum_valid = counter ? 1 : 0;
+        load_size = 0;
+      end
+
+    endcase
+
+endmodule
+
+/*
+module adler32_acc(
+    input clk,
+    input rst_n,
+    input [7:0] data,
+    output [31:0] checksum
+);
+
+    reg [15:0] Anew, Aold;
+    reg [15:0] Bnew, Bold;
+
+
+    always @(posedge clk) begin
+        if(!rst_n) begin
+            Anew <= 1;
+            Bnew <= 0;
+            Aold <= 1;
+            Bold <= 0;
+            end
+        else begin
+            Anew = ((Aold + data)%65521);
+            Bnew = ((Bold + ((Aold + data)%65521))%65521);
+            Aold = Anew;
+            Bold = Bnew;
+            end
+    end
+    assign checksum = { Bnew, Anew };
+
+endmodule
+*/

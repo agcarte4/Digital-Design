@@ -1,0 +1,94 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/Modeltech_pe_edu_10.4a/examples
+vcontroller
+Z0 !s110 1554259744
+!i10b 1
+!s100 E4zj@@2>J3VYlMGCfo0o[3
+IlS]LZFQha6Cbgc1DS>]`30
+Z1 VDg1SIo80bB@j0V0VzS_@n1
+Z2 dC:/Users/bravo/Desktop/ECE310/hw8
+Z3 w1554259732
+Z4 8C:/Users/bravo/Desktop/ECE310/hw8/incbyone.v
+Z5 FC:/Users/bravo/Desktop/ECE310/hw8/incbyone.v
+L0 14
+Z6 OP;L;10.4a;61
+r1
+!s85 0
+31
+Z7 !s108 1554259744.000000
+Z8 !s107 C:/Users/bravo/Desktop/ECE310/hw8/incbyone.v|
+Z9 !s90 -reportprogress|300|-work|work|-L|mtiAvm|-L|mtiRnm|-L|mtiOvm|-L|mtiUvm|-L|mtiUPF|-L|infact|-O0|C:/Users/bravo/Desktop/ECE310/hw8/incbyone.v|
+!s101 -O0
+!i113 1
+Z10 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact -O0
+vdatapath
+R0
+!i10b 1
+!s100 VJ<O[IGU52ZGZnmXlkfiS0
+I1K]RKhHol8JDak8^54WVK3
+R1
+R2
+R3
+R4
+R5
+L0 49
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!s101 -O0
+!i113 1
+R10
+vincbyone
+R0
+!i10b 1
+!s100 YAJ=Emk_gm4XziF5999hV0
+I;VFjSz9QhB^O13=`hi73N2
+R1
+R2
+R3
+R4
+R5
+L0 1
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!s101 -O0
+!i113 1
+R10
+vincbyone_tb
+!s110 1554259362
+!i10b 1
+!s100 e@If[VCIUAfCYQnLc_j2B3
+IGnzGG^cEaJEKYT@<]ee4I1
+R1
+R2
+w1554153638
+8C:/Users/bravo/Desktop/ECE310/hw8/incbyone_tb.v
+FC:/Users/bravo/Desktop/ECE310/hw8/incbyone_tb.v
+L0 1
+R6
+r1
+!s85 0
+31
+!s108 1554259362.000000
+!s107 C:/Users/bravo/Desktop/ECE310/hw8/incbyone_tb.v|
+!s90 -reportprogress|300|-work|work|-L|mtiAvm|-L|mtiRnm|-L|mtiOvm|-L|mtiUvm|-L|mtiUPF|-L|infact|-O0|C:/Users/bravo/Desktop/ECE310/hw8/incbyone_tb.v|
+!s101 -O0
+!i113 1
+R10
